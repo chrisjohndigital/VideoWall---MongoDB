@@ -1,0 +1,6 @@
+.pull-right {margin-left:10px; margin-top:10px}
+.panel .pull-right {margin-top:0px}
+.panel {margin-top:20px}
+.pull-left {margin-right:10px}
+.panel-info a {margin-top:10px}
+.panel-info .panel a {margin-top:0px}

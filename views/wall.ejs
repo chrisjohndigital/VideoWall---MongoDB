@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/template/head.ejs %>
+  </head>
+  <body>
+      <div class="container">
+          <div class="page-header">
+              <ol class="breadcrumb">
+                  <li><a href="/">VideoWall</a></li>
+                  <li class="active"><%= name %></li>
+              </ol>
+        </div>
+        <% if (videos.length>0) {%>
+                <% for(var i=0; i<videos.length; i++) {%>
+                    <% if (videos[i]!=null) {%>
+                        <% if (videos[i].visible==1) {%>
+                            <button data-toggle="collapse" data-target="#a<%= i %>" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-trash"></span></button>
+                            <h1><%= videos[i].name %></h1>
+                            <div id="a<%= i %>" class="collapse">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Are you sure you want to delete this video?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <a href="/removevideo?id=<%= id %>&index=<%= i %>" class="btn btn-danger">Yes</a>
+                                        <button data-toggle="collapse" data-target="#a<%= i %>" class="btn btn-success">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <video class="embed-responsive-item" width="<%= videos[i].video_width %>" height="<%= videos[i].video_height %>" poster="/uploads/<%= videos[i].poster_id %>" controls preload="none">
+                                    <source src="/uploads/<%= videos[i].video_id %>" type="<%= videos[i].mime_type %>">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                    <% } %>
+                <% } %>
+            <% } %>
+        <% } %>
+        <div class="col-md-8">
+            <% include partials/content/form_new_section.ejs %>  
+        </div>
+          <div class="col-md-4">
+            <% include partials/content/camera.ejs %>  
+        </div>
+        <% include partials/template/foot.ejs %>
+      </div>
+  </body>
+</html>

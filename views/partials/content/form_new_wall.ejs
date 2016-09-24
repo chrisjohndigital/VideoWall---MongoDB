@@ -1,0 +1,30 @@
+<div class="panel panel-success">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create a Wall</h2>
+            </div>
+            <div class="panel-body">
+                <form action="/addwall" method="post">
+                    <div class="form-group">
+                        <label for="name-input">Wall name</label>
+                        <input id="name-input" type="text" name="name" placeholder="Name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-input">Wall position</label>
+                        <select name="position" id="select-input" required>
+                            <% if (walls.length>0) {%>
+                            <option value="<%= walls.length+1 %>"><%= walls.length+1 %></option>
+                            <% } else { %>
+                            <option value="1">1</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkbox-input">Wall visibility</label>
+                        <input type="checkbox" name="visible" value="1" id="checkbox-input" checked required> Visible<br>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create wall" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+          </div>

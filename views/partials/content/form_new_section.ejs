@@ -1,0 +1,60 @@
+<div class="panel panel-success">
+            <div class="panel-heading">
+                <h2 class="panel-title">Add a video</h2>
+            </div>
+            <div class="panel-body">
+                <form action="/addvideo?id=<%= id %>" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name-input">Video name</label>
+                        <input id="name-input" type="text" name="name" placeholder="Name" value="Default" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-input">Video position</label>
+                        <select name="position" id="select-input" required>
+                            <% if (videos.length>0) {%>
+                            <option value="<%= videos.length+1 %>"><%= videos.length+1 %></option>
+                            <% } else { %>
+                            <option value="1">1</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkbox-input">Video visibility</label>
+                        <input type="checkbox" name="visible" value="1" id="checkbox-input" checked required> Visible<br>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_id_input">Video ID</label>
+                        <input id="video_id_input" type="text" name="video_id" placeholder="Video ID" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="poster_id_input">Poster ID</label>
+                        <input id="poster_id_input" type="text" name="poster_id" placeholder="Poster ID" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mime_type_input">Mime type</label>
+                        <input id="mime_type_input" type="text" name="mime_type" placeholder="Mime type" value="video/mp4" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_width_input">Video width</label>
+                        <input id="video_width_input" type="text" name="video_width" placeholder="Video width" value="1280" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_height_input">Video height</label>
+                        <input id="video_height_input" type="text" name="video_height" placeholder="Video height" value="720" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="video_attachment1">Video file</label>
+                        <input id="video_attachment1" type="file" name="video_attachment1" accept="video/*" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="video_attachment2">Poster file</label>
+                        <input id="video_attachment2" type="file" name="video_attachment2" accept="image/*" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create section" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+          </div>
