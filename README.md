@@ -1,7 +1,7 @@
 VideoWall - MongoDB
 ======================================
 
-Lightweight Node.js and MongoDB application for creating HTML5-video based collaborative learning spaces
+Lightweight Node.js and MongoDB application for creating asynchronous HTML5-video based collaborative learning spaces
 
 ##About
 
