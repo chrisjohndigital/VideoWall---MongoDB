@@ -13,6 +13,30 @@ var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 var videos = [];
 
+var findVideos = function(db, query, callback) {
+   var cursor = db.collection('walls').find( query );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc.videos);
+          videos = doc.videos;
+      } else {
+         callback();
+      }
+   });
+};
+
+var updateRecord = function(db, query, videos, callback) {
+    db.collection('walls').updateOne(
+      query,
+      {
+        $set: { "videos": videos }
+      }, function(err, results) {
+        console.log(results);
+        callback();
+   });
+};
+
 router.post('/', function(req, res) {
     var busboy = new Busboy({ headers: req.headers });
     var entry = new Object();
@@ -41,29 +65,5 @@ router.post('/', function(req, res) {
         });
     });
 });
-
-var findVideos = function(db, query, callback) {
-   var cursor = db.collection('walls').find( query );
-   cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-         console.dir(doc.videos);
-          videos = doc.videos;
-      } else {
-         callback();
-      }
-   });
-};
-
-var updateRecord = function(db, query, videos, callback) {
-    db.collection('walls').updateOne(
-      query,
-      {
-        $set: { "videos": videos }
-      }, function(err, results) {
-        console.log(results);
-        callback();
-   });
-};
 
 module.exports = router;

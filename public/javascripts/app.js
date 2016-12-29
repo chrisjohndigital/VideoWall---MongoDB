@@ -42,8 +42,8 @@ $( document ).ready(function() {
     if (navigator.mediaDevices) {
         if (navigator.mediaDevices.getUserMedia && $('#camera').length > 0) {
 			 var video_constraints = {
-				width: { min: 1280, ideal: 1280, max: 1280 },
-        		height: { min: 720, ideal: 720, max: 720 }
+				width: { min: 720, ideal: 720, max: 720 },
+        		height: { min: 576, ideal: 576, max: 576 }
 			};
 			var device = navigator.mediaDevices.getUserMedia({audio: false, video: video_constraints});
             device.then(function(mediaStream) {

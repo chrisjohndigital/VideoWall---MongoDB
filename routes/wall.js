@@ -6,6 +6,19 @@ var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 var videos = [];
 
+var findVideos = function(db, query, callback) {
+   var cursor = db.collection('walls').find( query );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc.videos);
+         videos = doc.videos;
+      } else {
+         callback();
+      }
+   });
+};
+
 router.get('/', function(req, res, next) {
     var url = req.app.get('mongodbaddress');
     videos = [];
@@ -19,18 +32,5 @@ router.get('/', function(req, res, next) {
         });
     }
 });
-
-var findVideos = function(db, query, callback) {
-   var cursor = db.collection('walls').find( query );
-   cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-         console.dir(doc.videos);
-         videos = doc.videos;
-      } else {
-         callback();
-      }
-   });
-};
 
 module.exports = router;

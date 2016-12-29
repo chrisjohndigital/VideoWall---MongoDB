@@ -7,17 +7,6 @@ var assert = require('assert');
 
 var sanitizeHtml = require('sanitize-html');
 
-router.post('/', function(req, res) {
-    var url = req.app.get('mongodbaddress');
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        insertDocument(db, req, function() {
-            db.close();
-            res.redirect('/');
-        });
-    });
-});
-
 var insertDocument = function(db, req, callback) {
    db.collection('walls').insertOne( {
       "name" : sanitizeHtml(req.body.name),
@@ -29,5 +18,16 @@ var insertDocument = function(db, req, callback) {
         callback();
   });
 };
+
+router.post('/', function(req, res) {
+    var url = req.app.get('mongodbaddress');
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        insertDocument(db, req, function() {
+            db.close();
+            res.redirect('/');
+        });
+    });
+});
 
 module.exports = router;

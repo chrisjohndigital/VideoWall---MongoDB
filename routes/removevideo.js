@@ -6,21 +6,6 @@ var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 var videos = [];
 
-router.get('/', function(req, res) {
-    var url = req.app.get('mongodbaddress');
-    videos = [];
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        findVideos(db, {'_id': ObjectId(req.query.id)}, function() {
-            delete videos[req.query.index]
-            updateRecord(db, {'_id': ObjectId(req.query.id)}, videos, function() {
-                db.close();
-                res.redirect('/wall?id='+req.query.id);
-            });
-        });
-    });
-});
-
 var findVideos = function(db, query, callback) {
    var cursor = db.collection('walls').find( query );
    cursor.each(function(err, doc) {
@@ -44,5 +29,20 @@ var updateRecord = function(db, query, videos, callback) {
         callback();
    });
 };
+
+router.get('/', function(req, res) {
+    var url = req.app.get('mongodbaddress');
+    videos = [];
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        findVideos(db, {'_id': ObjectId(req.query.id)}, function() {
+            delete videos[req.query.index]
+            updateRecord(db, {'_id': ObjectId(req.query.id)}, videos, function() {
+                db.close();
+                res.redirect('/wall?id='+req.query.id);
+            });
+        });
+    });
+});
 
 module.exports = router;

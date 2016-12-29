@@ -6,18 +6,6 @@ var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 var walls = [];
 
-router.get('/', function(req, res, next) {
-    var url = req.app.get('mongodbaddress');
-    walls = [];
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        findWalls(db, function() {
-            db.close();
-            res.render('index', { walls: walls });
-        });
-    });
-});
-
 var findWalls = function(db, callback) {
    var cursor = db.collection('walls').find( );
    cursor.each(function(err, doc) {
@@ -30,5 +18,17 @@ var findWalls = function(db, callback) {
       }
    });
 };
+
+router.get('/', function(req, res, next) {
+    var url = req.app.get('mongodbaddress');
+    walls = [];
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        findWalls(db, function() {
+            db.close();
+            res.render('index', { walls: walls });
+        });
+    });
+});
 
 module.exports = router;

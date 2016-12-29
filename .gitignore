@@ -2,3 +2,4 @@ Thumbs.db
 bin/
 node_modules/
 public/uploads/
+.DS_Store
