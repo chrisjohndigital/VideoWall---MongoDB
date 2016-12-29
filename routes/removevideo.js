@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var mongoclient = require('mongodb').MongoClient;
+var objectid = require('mongodb').ObjectID;
 var assert = require('assert');
 var videos = [];
 
@@ -33,11 +33,11 @@ var updateRecord = function(db, query, videos, callback) {
 router.get('/', function(req, res) {
     var url = req.app.get('mongodbaddress');
     videos = [];
-    MongoClient.connect(url, function(err, db) {
+    mongoclient.connect(url, function(err, db) {
         assert.equal(null, err);
-        findVideos(db, {'_id': ObjectId(req.query.id)}, function() {
+        findVideos(db, {'_id': objectid(req.query.id)}, function() {
             delete videos[req.query.index]
-            updateRecord(db, {'_id': ObjectId(req.query.id)}, videos, function() {
+            updateRecord(db, {'_id': objectid(req.query.id)}, videos, function() {
                 db.close();
                 res.redirect('/wall?id='+req.query.id);
             });

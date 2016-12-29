@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var mongoclient = require('mongodb').MongoClient;
 var assert = require('assert');
 var walls = [];
 
@@ -22,7 +21,7 @@ var findWalls = function(db, callback) {
 router.get('/', function(req, res, next) {
     var url = req.app.get('mongodbaddress');
     walls = [];
-    MongoClient.connect(url, function(err, db) {
+    mongoclient.connect(url, function(err, db) {
         assert.equal(null, err);
         findWalls(db, function() {
             db.close();

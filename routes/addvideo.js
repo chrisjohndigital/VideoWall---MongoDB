@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var Busboy = require('busboy');
+var busboy = require('busboy');
 var fs = require('fs');
 var path = require('path');
 var inspect = require('util').inspect;
 
 var sanitizeHtml = require('sanitize-html');
 
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var mongoclient = require('mongodb').MongoClient;
+var objectid = require('mongodb').ObjectID;
 var assert = require('assert');
 var videos = [];
 
@@ -38,27 +38,27 @@ var updateRecord = function(db, query, videos, callback) {
 };
 
 router.post('/', function(req, res) {
-    var busboy = new Busboy({ headers: req.headers });
+    var busboyhandler = new busboy({ headers: req.headers });
     var entry = new Object();
-    busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+    busboyhandler.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
         entry[fieldname] = sanitizeHtml(val);
     });
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+    busboyhandler.on('file', function(fieldname, file, filename, encoding, mimetype) {
         var uploadsDirectory = (path.join(__dirname, '../public/uploads/'))
         var saveTo = path.join(uploadsDirectory, path.basename(filename));
         file.pipe(fs.createWriteStream(saveTo));
     });
         
-    busboy.on('finish', function() {
+    busboyhandler.on('finish', function() {
     });
-    req.pipe(busboy);
+    req.pipe(busboyhandler);
     var url = req.app.get('mongodbaddress');
     videos = [];
-    MongoClient.connect(url, function(err, db) {
+    mongoclient.connect(url, function(err, db) {
         assert.equal(null, err);
-        findVideos(db, {'_id': ObjectId(req.query.id)}, function() { 
+        findVideos(db, {'_id': objectid(req.query.id)}, function() { 
             videos[videos.length] = entry;
-            updateRecord(db, {'_id': ObjectId(req.query.id)}, videos, function() {
+            updateRecord(db, {'_id': objectid(req.query.id)}, videos, function() {
                 db.close();
                 res.redirect('/wall?id='+req.query.id);
             });

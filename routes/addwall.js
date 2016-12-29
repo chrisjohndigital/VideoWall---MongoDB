@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var mongoclient = require('mongodb').MongoClient;
 var assert = require('assert');
 
 var sanitizeHtml = require('sanitize-html');
@@ -21,7 +20,7 @@ var insertDocument = function(db, req, callback) {
 
 router.post('/', function(req, res) {
     var url = req.app.get('mongodbaddress');
-    MongoClient.connect(url, function(err, db) {
+    mongoclient.connect(url, function(err, db) {
         assert.equal(null, err);
         insertDocument(db, req, function() {
             db.close();
