@@ -8,10 +8,10 @@ var sanitizeHtml = require('sanitize-html');
 
 var insertDocument = function(db, req, callback) {
    db.collection('walls').insertOne( {
-      "name" : sanitizeHtml(req.body.name),
-      "position" : sanitizeHtml(req.body.position),
-      "visible" : sanitizeHtml(req.body.visible),
-      "videos": []
+      'name' : sanitizeHtml(req.body.name),
+      'position' : sanitizeHtml(req.body.position),
+      'visible' : sanitizeHtml(req.body.visible),
+      'videos': []
    }, function(err, result) {
         assert.equal(err, null);
         callback();

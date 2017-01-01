@@ -30,7 +30,7 @@ var updateRecord = function(db, query, videos, callback) {
     db.collection('walls').updateOne(
       query,
       {
-        $set: { "videos": videos }
+        $set: { 'videos': videos }
       }, function(err, results) {
         console.log(results);
         callback();
