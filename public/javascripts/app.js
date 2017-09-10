@@ -47,7 +47,8 @@ $( document ).ready(function() {
 			};
 			var device = navigator.mediaDevices.getUserMedia({audio: false, video: video_constraints});
             device.then(function(mediaStream) {
-                $('#camera').attr('src', window.URL.createObjectURL(mediaStream));
+                //$('#camera').attr('src', window.URL.createObjectURL(mediaStream));//Deprecated
+                document.getElementById('camera').srcObject = mediaStream;
             });
             device.catch(function(err) {
                 alert (err);
