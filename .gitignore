@@ -2,4 +2,5 @@ Thumbs.db
 bin/
 node_modules/
 public/uploads/
+package-lock.json
 .DS_Store
